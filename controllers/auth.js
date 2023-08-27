@@ -20,9 +20,9 @@ const register = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   const users = await User.find().sort({ createdAd: -1 });
-  console.log(users);
   if (users.length < 1) {
     res.status(StatusCodes.OK).json({ msg: "No users found" });
+    return;
   }
   res.status(StatusCodes.OK).json({ users, count: users.length });
 };

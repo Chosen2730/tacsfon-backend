@@ -24,6 +24,7 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Please provide a valid password"],
     minLength: 6,
+    trim: true,
   },
 });
 

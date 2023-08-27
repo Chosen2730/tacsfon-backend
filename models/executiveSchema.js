@@ -1,0 +1,24 @@
+const { model, Schema } = require("mongoose");
+const ExecoSchema = new Schema(
+  {
+    name: { type: String, required: [true, "Please enter a name"], trim: true },
+    title: {
+      type: String,
+      required: [true, "Please enter a title"],
+      trim: true,
+      unique: true,
+    },
+    tel: {
+      type: String,
+      required: [true, "Please enter a valid phone number"],
+    },
+    imageUrl: {
+      type: String,
+      required: [true, "Please enter a valid image url"],
+    },
+    category: { type: String, enum: ["general", "central"] },
+  },
+  { timestamps: true }
+);
+
+module.exports = model("Execo", ExecoSchema);
