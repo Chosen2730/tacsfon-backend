@@ -2,6 +2,7 @@
 const { StatusCodes } = require("http-status-codes");
 const Exco = require("../models/executiveSchema");
 const { BadRequestError } = require("../errors");
+// GET ALL EXCO
 const getAllExco = async (req, res) => {
   const excos = await Exco.find().sort({ createdAt: -1 });
   if (excos.length < 1) {
@@ -12,6 +13,7 @@ const getAllExco = async (req, res) => {
   res.status(StatusCodes.OK).json({ excos, total: excos.length });
 };
 
+// CREATE NEW EXCO
 const createExco = async (req, res) => {
   const { name, title, tel, category, imageUrl } = req.body;
   if (!name || !title || !tel || !category || !imageUrl) {
@@ -23,12 +25,25 @@ const createExco = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ exco });
 };
 
+// UPDATE AN EXISTING EXCO DETAILS
 const updateExco = async (req, res) => {
-  res.send("update an exco");
+  const { id } = req.params;
+  const exco = await Exco.findOneAndUpdate({ _id: id }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!exco) {
+    throw new BadRequestError("Exco not found");
+  }
+  res.status(StatusCodes.OK).json({ msg: "Exco updated successfully", exco });
 };
+
+// DELETE AN EXCO
 const deleteExco = async (req, res) => {
   res.send("update an exco");
 };
+
+// SEARCH AN EXCO WITH NAME OR POSITION
 const searchExco = async (req, res) => {
   res.send("update an exco");
 };
