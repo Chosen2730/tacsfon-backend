@@ -35,12 +35,21 @@ const updateExco = async (req, res) => {
   if (!exco) {
     throw new BadRequestError("Exco not found");
   }
-  res.status(StatusCodes.OK).json({ msg: "Exco updated successfully", exco });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "Exco updated successfully", exco }, { new: true });
 };
 
 // DELETE AN EXCO
 const deleteExco = async (req, res) => {
-  res.send("update an exco");
+  const { id } = req.params;
+  const exco = await Exco.findOneAndRemove({ _id: id });
+  if (!exco) {
+    throw new BadRequestError(`Exco with id ${id} not found`);
+  }
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `Exco with id ${id} has been deleted successfully` });
 };
 
 // SEARCH AN EXCO WITH NAME OR POSITION
