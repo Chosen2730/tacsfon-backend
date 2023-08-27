@@ -2,6 +2,7 @@
 const { StatusCodes } = require("http-status-codes");
 const Exco = require("../models/executiveSchema");
 const { BadRequestError } = require("../errors");
+const { NotFoundError } = require("../errors");
 // GET ALL EXCO
 const getAllExco = async (req, res) => {
   const excos = await Exco.find().sort({ createdAt: -1 });
@@ -54,7 +55,23 @@ const deleteExco = async (req, res) => {
 
 // SEARCH AN EXCO WITH NAME OR POSITION
 const searchExco = async (req, res) => {
-  res.send("update an exco");
+  const exco = await Exco.aggregate([
+    {
+      $search: {
+        index: "tacsfon",
+        text: {
+          query: req.params.search,
+          path: {
+            wildcard: "*",
+          },
+        },
+      },
+    },
+  ]);
+  if (!exco) {
+    throw new NotFoundError(`Exco not found`);
+  }
+  res.status(StatusCodes.OK).json({ exco });
 };
 
 module.exports = { getAllExco, createExco, updateExco, deleteExco, searchExco };
