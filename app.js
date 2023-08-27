@@ -1,5 +1,6 @@
 require("express-async-errors");
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const connectDB = require("./db/connect");
@@ -13,6 +14,8 @@ const port = 3000;
 //middlewares
 app.use(express.json());
 app.use("/api/v1", authRouter);
+app.use(express.urlencoded({ limit: "10mb", extended: "true" }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("TACSFON Web API");
