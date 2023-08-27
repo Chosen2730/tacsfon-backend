@@ -8,6 +8,7 @@ const connectDB = require("./db/connect");
 //Routers
 const authRouter = require("./routes/auth");
 const excoRouter = require("./routes/excoRoute");
+const eventsRouter = require("./routes/eventsRoutes");
 
 //Error handling middlewares
 const notFoundMiddleware = require("./middlewares/notFoundMiddleWare");
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/v1", authRouter);
 app.use("/api/v1", verifyUser, excoRouter);
+app.use("/api/v1", verifyUser, eventsRouter);
 app.use(express.urlencoded({ limit: "10mb", extended: "true" }));
 
 app.get("/", (req, res) => {
