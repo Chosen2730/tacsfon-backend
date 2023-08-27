@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../models/userSchema");
-const { BadRequestError } = require("../errors");
+const { BadRequestError, NotFoundError } = require("../errors");
 
 const register = async (req, res) => {
   const { email, name, password } = req.body;
@@ -11,7 +11,7 @@ const register = async (req, res) => {
     );
   }
   const user = await User.create({ ...req.body });
-  const token = user.createJWT();
+  const token = await user.createJWT();
   res.status(StatusCodes.CREATED).json({
     user: { name: user.name, userID: user._id, email: user.email },
     token,
@@ -35,7 +35,14 @@ const login = async (req, res) => {
     );
   }
   const user = await User.findOne({ email });
-  const isMatch = user.comparePassword(password);
+  if (!user) {
+    throw new NotFoundError(
+      "User not found, please provide a valid email and password"
+    );
+  }
+  const isMatch = await user.comparePassword(password);
+  console.log(isMatch);
+
   if (!isMatch) {
     throw new BadRequestError(
       "Please provide a valid email, name and password"

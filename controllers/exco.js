@@ -7,10 +7,9 @@ const { NotFoundError } = require("../errors");
 const getAllExco = async (req, res) => {
   const excos = await Exco.find().sort({ createdAt: -1 });
   if (excos.length < 1) {
-    res.status(StatusCodes.OK).json({ msg: "No Exco found" });
+    res.status(StatusCodes.OK).json({ msg: "No Exco found", excos });
     return;
   }
-
   res.status(StatusCodes.OK).json({ excos, total: excos.length });
 };
 
@@ -36,9 +35,7 @@ const updateExco = async (req, res) => {
   if (!exco) {
     throw new BadRequestError("Exco not found");
   }
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: "Exco updated successfully", exco }, { new: true });
+  res.status(200).json({ exco, msg: "Exco details successfully updated" });
 };
 
 // DELETE AN EXCO
