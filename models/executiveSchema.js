@@ -12,9 +12,15 @@ const ExecoSchema = new Schema(
       type: String,
       required: [true, "Please enter a valid phone number"],
     },
-    imageUrl: {
-      type: String,
-      required: [true, "Please enter a valid image url"],
+    image: {
+      url: {
+        type: String,
+        required: [true, "Please enter a valid image url"],
+      },
+      imageId: {
+        type: String,
+        required: [true, "Please enter a valid image url"],
+      },
     },
     category: { type: String, enum: ["general", "central"] },
   },

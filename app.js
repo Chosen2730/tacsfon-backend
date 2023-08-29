@@ -4,6 +4,14 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const connectDB = require("./db/connect");
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+const imageUploader = require("./middlewares/imageUploader");
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 //Routers
 const authRouter = require("./routes/auth");
@@ -23,6 +31,7 @@ const port = 3000;
 
 //middlewares
 app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 app.use(cors());
 
 //Routes that does not require authorization
@@ -30,7 +39,7 @@ app.use("/api/v1", authRouter);
 app.use("/api/v1/user", userRouter);
 
 //Routes that require authorization
-app.use("/api/v1", verifyUser, excoRouter);
+app.use("/api/v1/exco", verifyUser, excoRouter);
 app.use("/api/v1", eventsRouter);
 app.use("/api/v1", testimonyRouter);
 app.use("/api/v1", galleryRouter);
