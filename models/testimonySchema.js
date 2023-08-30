@@ -2,7 +2,6 @@ const { model, Schema } = require("mongoose");
 
 const TestimonySchema = new Schema(
   {
-    imageUrl: String,
     name: String,
     title: String,
     email: String,
@@ -17,6 +16,14 @@ const TestimonySchema = new Schema(
       required: [true, "Please give the details of your testimony"],
       minLength: 5,
       maxLength: 60,
+    },
+    image: {
+      url: {
+        type: String,
+      },
+      imageId: {
+        type: String,
+      },
     },
   },
   { timestamps: true }

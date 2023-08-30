@@ -6,7 +6,16 @@ const EventSchema = new Schema(
       equired: true,
     },
     date: { type: Date, required: true },
-    imageUrl: { type: String, required: true },
+    image: {
+      url: {
+        type: String,
+        required: [true, "Please enter a valid image url"],
+      },
+      imageId: {
+        type: String,
+        required: [true, "Please enter a valid image url"],
+      },
+    },
     description: { type: String },
   },
   { timestamps: true }

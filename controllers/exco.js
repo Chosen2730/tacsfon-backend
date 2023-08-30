@@ -50,11 +50,11 @@ const updateExco = async (req, res) => {
 
   const newImg = req.files?.image;
   if (newImg) {
-    const { public_id, secure_url } = await uploadImage(req, "exco");
-    update = { ...req.body, image: { url: secure_url, imageId: public_id } };
     if (imageId) {
       await deleteImage(imageId);
     }
+    const { public_id, secure_url } = await uploadImage(req, "exco");
+    update = { ...req.body, image: { url: secure_url, imageId: public_id } };
   }
 
   const newExco = await Exco.findOneAndUpdate({ _id: id }, update, {
