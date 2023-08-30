@@ -1,3 +1,4 @@
+const uploadImage = require("../middlewares/imageUploader");
 const Event = require("../models/eventSchema");
 const Exco = require("../models/executiveSchema");
 const Gallery = require("../models/gallerySchema");
@@ -23,7 +24,9 @@ const getAllEvents = async (req, res) => {
 };
 
 const getAllTestimony = async (req, res) => {
-  const testimony = await Testimony.find().sort({ createdAt: -1 });
+  const testimony = await Testimony.find({ status: "approved" }).sort({
+    createdAt: -1,
+  });
   if (testimony.length < 1) {
     res.status(StatusCodes.OK).json({ msg: "No testimony found", testimony });
     return;
@@ -45,7 +48,18 @@ const createTestimony = async (req, res) => {
   if (!content) {
     throw new BadRequestError("Please enter your testimony details");
   }
-  const testimony = await Testimony.create({ ...req.body });
+  if (content.length < 5) {
+    throw new BadRequestError("Details are too short");
+  }
+  if (content.length > 200) {
+    throw new BadRequestError("Details are too long");
+  }
+  let data = { ...req.body };
+  if (req.files?.image) {
+    const { public_id, secure_url } = await uploadImage(req, "testimonies");
+    data = { ...req.body, image: { imageId: public_id, url: secure_url } };
+  }
+  const testimony = await Testimony.create({ ...data });
   res.status(StatusCodes.CREATED).json({ testimony });
 };
 

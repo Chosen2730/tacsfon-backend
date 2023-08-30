@@ -1,7 +1,7 @@
 const { BadRequestError } = require("../errors");
 const cloudinary = require("cloudinary").v2;
 const uploadMultipleImages = async (req, name) => {
-  const images = req.files.image;
+  const images = req.files?.image;
   const maxSize = 1024 * 1024 * 2 * 5;
 
   if (!images || !Array.isArray(images) || images.length === 0) {

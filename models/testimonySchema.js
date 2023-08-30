@@ -20,9 +20,11 @@ const TestimonySchema = new Schema(
     image: {
       url: {
         type: String,
+        required: true,
       },
       imageId: {
         type: String,
+        required: true,
       },
     },
   },
