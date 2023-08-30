@@ -3,7 +3,7 @@ const { model, Schema } = require("mongoose");
 const TestimonySchema = new Schema(
   {
     name: String,
-    title: String,
+    unit: String,
     email: String,
     tel: String,
     status: {
@@ -15,7 +15,7 @@ const TestimonySchema = new Schema(
       type: String,
       required: [true, "Please give the details of your testimony"],
       minLength: 5,
-      maxLength: 60,
+      maxLength: 200,
     },
     image: {
       url: {

@@ -2,9 +2,13 @@ const { model, Schema } = require("mongoose");
 
 const GallerySchema = new Schema(
   {
-    imageUrl: {
-      type: String,
-      required: [true, "Please enter a valid image URL"],
+    image: {
+      url: {
+        type: String,
+      },
+      imageId: {
+        type: String,
+      },
     },
   },
   { timestamps: true }

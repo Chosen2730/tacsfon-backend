@@ -42,6 +42,7 @@ app.use("/api/v1", authRouter);
 app.use("/api/v1/user", userRouter);
 
 //Routes that require authorization
+
 app.use("/api/v1/exco", verifyUser, excoRouter);
 app.use("/api/v1", eventsRouter);
 app.use("/api/v1", testimonyRouter);

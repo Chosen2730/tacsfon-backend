@@ -18,6 +18,12 @@ const createTestimony = async (req, res) => {
   if (!content) {
     throw new BadRequestError("Please enter your testimony details");
   }
+  if (content.length < 5) {
+    throw new BadRequestError("Details are too short");
+  }
+  if (content.length > 200) {
+    throw new BadRequestError("Details are too long");
+  }
   let data = { ...req.body };
   if (req.files?.image) {
     const { public_id, secure_url } = await uploadImage(req, "testimonies");
