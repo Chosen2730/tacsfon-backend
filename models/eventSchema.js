@@ -5,7 +5,7 @@ const EventSchema = new Schema(
       type: String,
       equired: true,
     },
-    date: { type: Date, required: true },
+    date: { type: String, required: true },
     image: {
       url: {
         type: String,

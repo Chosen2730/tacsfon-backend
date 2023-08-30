@@ -37,6 +37,7 @@ const updateEvent = async (req, res) => {
   if (!event) {
     throw new BadRequestError("event not found");
   }
+
   const {
     image: { imageId },
   } = event;

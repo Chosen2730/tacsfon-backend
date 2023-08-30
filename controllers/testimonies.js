@@ -36,6 +36,7 @@ const updateTestimony = async (req, res) => {
   if (!testimony) {
     throw new BadRequestError("event not found");
   }
+
   const {
     image: { imageId },
   } = testimony;
@@ -49,7 +50,7 @@ const updateTestimony = async (req, res) => {
     update = { ...req.body, image: { url: secure_url, imageId: public_id } };
   }
 
-  const newTestimony = await Testimony.findOneAndUpdate({ _id: id }, req.body, {
+  const newTestimony = await Testimony.findOneAndUpdate({ _id: id }, update, {
     new: true,
     runValidators: true,
   });
@@ -72,9 +73,7 @@ const deleteTestimony = async (req, res) => {
   } = testimony;
 
   if (imageId) {
-    console.log("first", imageId);
-    const deleteImg = await deleteImage(imageId);
-    console.log(deleteImg);
+    await deleteImage(imageId);
   }
 
   await Testimony.findOneAndRemove({ _id: id });
