@@ -35,7 +35,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: true }));
+app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp" }));
 
 //Routes that does not require authorization
 app.use("/api/v1", authRouter);
@@ -55,6 +55,8 @@ app.get("/", (req, res) => {
 
 app.use(notFoundMiddleware);
 app.use(errorHandler);
+
+// https://tacsfon-backend.vercel.app/api/v1/exco/
 
 const start = async () => {
   await connectDB(process.env.MONGO_URI);
