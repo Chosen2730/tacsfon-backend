@@ -26,7 +26,6 @@ const errorHandler = require("./middlewares/errorHandler");
 
 //verify authorization
 const verifyUser = require("./middlewares/authorization");
-const port = 3000;
 
 //middlewares
 const corsOptions = {
@@ -49,6 +48,7 @@ app.use("/api/v1", testimonyRouter);
 app.use("/api/v1", galleryRouter);
 app.use(express.urlencoded({ limit: "10mb", extended: "true" }));
 
+const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   res.send("TACSFON Web API");
 });
