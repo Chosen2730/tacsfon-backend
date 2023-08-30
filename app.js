@@ -30,9 +30,9 @@ const verifyUser = require("./middlewares/authorization");
 const port = 3000;
 
 //middlewares
+app.use(cors());
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
-app.use(cors());
 
 //Routes that does not require authorization
 app.use("/api/v1", authRouter);
