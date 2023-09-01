@@ -86,7 +86,7 @@ const deleteTestimony = async (req, res) => {
 
   res
     .status(StatusCodes.OK)
-    .json({ msg: `testimony with id ${id} has been deleted successfully` });
+    .json({ msg: `this testimony has been deleted successfully` });
 };
 
 module.exports = {

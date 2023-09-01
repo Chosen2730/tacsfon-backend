@@ -19,6 +19,7 @@ const eventsRouter = require("./routes/eventsRoutes");
 const testimonyRouter = require("./routes/testimony");
 const galleryRouter = require("./routes/images");
 const userRouter = require("./routes/user");
+const blogRouter = require("./routes/blogPostRoutes");
 
 //Error handling middlewares
 const notFoundMiddleware = require("./middlewares/notFoundMiddleWare");
@@ -44,9 +45,10 @@ app.use("/api/v1/user", userRouter);
 //Routes that require authorization
 
 app.use("/api/v1/exco", verifyUser, excoRouter);
-app.use("/api/v1", eventsRouter);
-app.use("/api/v1", testimonyRouter);
-app.use("/api/v1", galleryRouter);
+app.use("/api/v1", verifyUser, eventsRouter);
+app.use("/api/v1", verifyUser, testimonyRouter);
+app.use("/api/v1", verifyUser, galleryRouter);
+app.use("/api/v1/blog", verifyUser, blogRouter);
 app.use(express.urlencoded({ limit: "10mb", extended: "true" }));
 
 const port = process.env.PORT || 3000;

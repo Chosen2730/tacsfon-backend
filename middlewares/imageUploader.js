@@ -18,6 +18,7 @@ const uploadImage = async (req, name) => {
     req.files.image.tempFilePath,
     { use_filename: true, folder: name }
   );
+  // console.log(public_id, secure_url);
   fs.unlinkSync(req.files.image.tempFilePath);
   return { public_id, secure_url };
 };
