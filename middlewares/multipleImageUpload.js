@@ -2,7 +2,7 @@ const { BadRequestError } = require("../errors");
 const cloudinary = require("cloudinary").v2;
 const uploadMultipleImages = async (req, name) => {
   const images = req.files?.image;
-  const maxSize = 1024 * 1024 * 2 * 5;
+  const maxSize = 1024 * 1024 * 2 * 3;
 
   if (!images || !Array.isArray(images) || images.length === 0) {
     throw new BadRequestError("Please upload images");
@@ -11,8 +11,8 @@ const uploadMultipleImages = async (req, name) => {
   if (images.length < 1) {
     throw new BadRequestError("No image was uploaded");
   }
-  if (images.length > 5) {
-    throw new BadRequestError("Maximum upload at a time is 5 images");
+  if (images.length > 2) {
+    throw new BadRequestError("Maximum upload at a time is 2 images");
   }
 
   const uploadedImages = [];

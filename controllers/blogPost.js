@@ -36,8 +36,8 @@ const createBlogPost = async (req, res) => {
       "title, summary, content and status are required"
     );
   }
-  if (summary.length > 50) {
-    throw new BadRequestError("summary should not be more than 50 characters");
+  if (summary.length > 100) {
+    throw new BadRequestError("summary should not be more than 100 characters");
   }
   const { public_id, secure_url } = await uploadImage(req, "blogs");
   const blog = await Blog.create({
