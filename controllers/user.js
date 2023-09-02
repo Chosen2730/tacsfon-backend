@@ -4,7 +4,10 @@ const Exco = require("../models/executiveSchema");
 const Gallery = require("../models/gallerySchema");
 const Testimony = require("../models/testimonySchema");
 const Blog = require("../models/blogPost");
+const Contact = require("../models/contactSchema");
 const { StatusCodes } = require("http-status-codes");
+const { BadRequestError } = require("../errors");
+const ExcoProfile = require("../models/excoProfileSchema");
 
 const getAllImages = async (req, res) => {
   const images = await Gallery.find().sort({ createdAt: -1 });
@@ -64,6 +67,25 @@ const createTestimony = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ testimony });
 };
 
+const createEnquiry = async (req, res) => {
+  const { content, name, email, tel, subject, category } = req.body;
+  if (!content || !name || !email || !tel || !category || !subject) {
+    throw new BadRequestError(
+      "Please provide a valid name, email, telephone number, subject, content and select the corresponding category"
+    );
+  }
+
+  if (content.length > 200) {
+    throw new BadRequestError("Details are too long");
+  }
+
+  const enquiry = await Contact.create({ ...req.body });
+  res.status(StatusCodes.CREATED).json({
+    enquiry,
+    msg: "Your enquiry has been recieved and will be processed with due diligence",
+  });
+};
+
 const getAllBlogPost = async (req, res) => {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 10;
@@ -89,6 +111,15 @@ const getBlogPost = async (req, res) => {
   res.status(StatusCodes.OK).json({ blog });
 };
 
+const getExcoProfile = async (req, res) => {
+  const exco = await ExcoProfile.find();
+  if (!exco) {
+    res.status(StatusCodes.OK).json({ msg: "No Exco found" });
+    return;
+  }
+  res.status(StatusCodes.OK).json({ details: exco[0] });
+};
+
 module.exports = {
   getAllEvents,
   getAllExco,
@@ -97,4 +128,6 @@ module.exports = {
   createTestimony,
   getAllBlogPost,
   getBlogPost,
+  createEnquiry,
+  getExcoProfile,
 };

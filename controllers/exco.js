@@ -1,10 +1,9 @@
 //
 const { StatusCodes } = require("http-status-codes");
 const Exco = require("../models/executiveSchema");
+const ExcoProfile = require("../models/excoProfileSchema");
 const { BadRequestError } = require("../errors");
 const { NotFoundError } = require("../errors");
-const cloudinary = require("cloudinary").v2;
-const fs = require("fs");
 const uploadImage = require("../middlewares/imageUploader");
 const deleteImage = require("../middlewares/deleteImage");
 
@@ -106,4 +105,10 @@ const searchExco = async (req, res) => {
   res.status(StatusCodes.OK).json({ exco });
 };
 
-module.exports = { getAllExco, createExco, updateExco, deleteExco, searchExco };
+module.exports = {
+  getAllExco,
+  createExco,
+  updateExco,
+  deleteExco,
+  searchExco,
+};

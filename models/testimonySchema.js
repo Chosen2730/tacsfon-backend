@@ -6,6 +6,7 @@ const TestimonySchema = new Schema(
     unit: String,
     email: String,
     tel: String,
+    isRead: { type: Boolean, required: true, default: false },
     status: {
       type: String,
       enum: ["pending", "approved"],

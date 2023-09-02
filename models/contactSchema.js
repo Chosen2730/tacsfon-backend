@@ -12,6 +12,7 @@ const ContactShema = new Schema(
       enum: ["enquiry", "prayer request", "others"],
     },
     content: { type: String, required: true },
+    isRead: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
 );
