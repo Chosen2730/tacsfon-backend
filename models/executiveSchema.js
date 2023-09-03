@@ -22,7 +22,7 @@ const ExecoSchema = new Schema(
         required: [true, "Please enter a valid image url"],
       },
     },
-    category: { type: String, enum: ["general", "central"] },
+    category: { type: String, enum: ["general", "central", "secretariat"] },
   },
   { timestamps: true }
 );
